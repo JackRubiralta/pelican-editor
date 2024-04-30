@@ -79,7 +79,7 @@ function ContentManager({ updateArticleContent }) {
                 <button onClick={() => addContent('paragraph')}>Add Paragraph</button>
                 <button onClick={() => addContent('image')}>Add Image</button>
                 <button onClick={() => addContent('list')}>Add List</button>
-                <button onClick={() => addContent('quote')}>Add Quote</button>
+                {/*<button onClick={() => addContent('quote')}>Add Quote</button>*/}
             </div>
         </div>
     );
