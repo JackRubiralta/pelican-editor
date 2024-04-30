@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .app div {
+    flex-direction: column; /* Stack the components vertically on smaller screens */
+  }
+}

@@ -1,99 +1,115 @@
-// src/components/ArticleForm.js
-import React, { useState } from 'react';
+import React from 'react';
 import './ArticleForm.css'; // Importing CSS for styling
 
-function ArticleForm() {
-    const [article, setArticle] = useState({
-        title: '',
-        titleSize: 'medium',
-        showSummary: true,
-        summaryContent: '',
-        author: '',
-        date: new Date().toISOString().slice(0, 10),
-        length: '',
-        includeMainImage: false,
-        mainImage: null,
-        mainImageCaption: '',
-        showMainImage: false,
-        imagePosition: 'bottom',
-    });
-
+function ArticleForm({ articleData, updateArticleData }) {
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setArticle(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
+        const updateValue = type === 'checkbox' ? checked : value;
+
+        // Handle nested state updates for articleData properties like "title.text"
+        if (name.includes('.')) {
+            const keys = name.split('.');
+            updateArticleData({
+                ...articleData,
+                [keys[0]]: {
+                    ...articleData[keys[0]],
+                    [keys[1]]: updateValue
+                }
+            });
+        } else {
+            updateArticleData({
+                ...articleData,
+                [name]: updateValue
+            });
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(article); // Replace with API call to submit the article data
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            updateArticleData({
+                ...articleData,
+                image: {
+                    ...articleData.image,
+                    file: file, // Store file for upload
+                }
+            });
+        }
     };
 
     return (
         <div className="article-form-container">
-            <form onSubmit={handleSubmit}>
+            <section className="form-section">
+                <h2>Title Section</h2>
                 <div className="input-group">
                     <label>Title</label>
-                    <input type="text" name="title" value={article.title} onChange={handleInputChange} />
+                    <input type="text" name="title.text" value={articleData.title.text} onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
                     <label>Title Size</label>
-                    <select name="titleSize" value={article.titleSize} onChange={handleInputChange}>
+                    <select name="title.size" value={articleData.title.size} onChange={handleInputChange}>
                         <option value="small">Small</option>
                         <option value="medium">Medium</option>
                         <option value="big">Big</option>
                     </select>
                 </div>
+            </section>
+
+            <section className="form-section">
+                <h2>Summary</h2>
+                <div className="input-group">
+                    <textarea name="summary.content" value={articleData.summary.content} onChange={handleInputChange} placeholder="Summary content (optional)" />
+                </div>
                 <div className="input-group">
                     <label>Show Summary</label>
-                    <input type="checkbox" name="showSummary" checked={article.showSummary} onChange={handleInputChange} />
+                    <input
+                        type="checkbox"
+                        name="summary.show"
+                        checked={articleData.summary.show}
+                        onChange={handleInputChange}
+                    />
                 </div>
-                {article.showSummary && (
-                    <div className="input-group">
-                        <label>Summary Content</label>
-                        <textarea name="summaryContent" value={article.summaryContent} onChange={handleInputChange} />
-                    </div>
-                )}
+            </section>
+
+            <section className="form-section">
+                <h2>Metadata</h2>
                 <div className="input-group">
                     <label>Author</label>
-                    <input type="text" name="author" value={article.author} onChange={handleInputChange} />
+                    <input type="text" name="author" value={articleData.author} onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
                     <label>Date</label>
-                    <input type="date" name="date" value={article.date} onChange={handleInputChange} />
+                    <input type="date" name="date" value={articleData.date} onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
                     <label>Length in minutes</label>
-                    <input type="number" name="length" value={article.length} onChange={handleInputChange} />
+                    <input type="number" name="length" value={articleData.length} onChange={handleInputChange} />
+                </div>
+            </section>
+
+            <section className="form-section">
+                <h2>Main Image (optional)</h2>
+                <div className="input-group">
+                    <label>Main Image File</label>
+                    <input type="file" onChange={handleFileChange} />
                 </div>
                 <div className="input-group">
-                    <label>Include Main Image</label>
-                    <input type="checkbox" name="includeMainImage" checked={article.includeMainImage} onChange={handleInputChange} />
+                    <label>Main Image Caption</label>
+                    <input type="text" name="image.caption" value={articleData.image.caption} onChange={handleInputChange} />
                 </div>
-                {article.includeMainImage && (
-                    <div className="input-group">
-                        <label>Main Image File</label>
-                        <input type="file" onChange={(e) => setArticle(prev => ({ ...prev, mainImage: e.target.files[0] }))} />
-                        <label>Main Image Caption</label>
-                        <input type="text" name="mainImageCaption" value={article.mainImageCaption} onChange={handleInputChange} />
-                    </div>
-                )}
                 <div className="input-group">
                     <label>Show Main Image on Front Page</label>
-                    <input type="checkbox" name="showMainImage" checked={article.showMainImage} onChange={handleInputChange} />
+                    <input type="checkbox" name="image.show" checked={articleData.image.show} onChange={handleInputChange} />
                 </div>
                 <div className="input-group">
                     <label>Image Position</label>
-                    <select name="imagePosition" value={article.imagePosition} onChange={handleInputChange}>
+                    <select name="image.position" value={articleData.image.position} onChange={handleInputChange}>
                         <option value="top">Top</option>
                         <option value="side">Side</option>
                         <option value="bottom">Bottom</option>
                     </select>
                 </div>
-                <button type="submit">Submit Article</button>
-            </form>
+            </section>
         </div>
     );
 }

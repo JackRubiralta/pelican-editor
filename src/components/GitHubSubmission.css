@@ -1,0 +1,32 @@
+/* GitHubSubmission.css */
+.github-submission {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .github-submission input[type="text"] {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .github-submission button {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .github-submission button:hover {
+    background-color: #138496;
+  }
+  

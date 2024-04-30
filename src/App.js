@@ -1,20 +1,52 @@
-// src/App.js
-import React from 'react';
-import ArticleForm from './components/ArticleForm';
-import './App.css'; // Assuming general styles are here
+import React, { useState } from "react";
+import ArticleForm from "./components/ArticleForm";
+import GitHubSubmission from "./components/GitHubSubmission";
+import ContentManager from "./components/ContentManager";
 
-function App() {
+const App = () => {
+  const [articleData, setArticleData] = useState({
+    title: { text: "", size: "medium" },
+    summary: { content: "", show: false },
+    author: "",
+    date: new Date().toISOString().slice(0, 10),
+    length: 3,
+    content: [],
+    image: { source: "", caption: "", show: true, position: "bottom" },
+  });
+
+  const updateArticleData = (data) => {
+    setArticleData(data);
+  };
+
+  const updateArticleContent = (newContent) => {
+    setArticleData((prevData) => ({
+      ...prevData,
+      content: newContent,
+    }));
+  };
+
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'row' }}>
-      <div style={{ flex: 1, padding: '20px' }}>
-        <ArticleForm />
-      </div>
-      <div style={{ flex: 2, padding: '20px' }}>
-        {/* This part can be used for other components or displaying articles */}
-        <p>Preview or other content goes here...</p>
+    <div className="app">
+      <GitHubSubmission articleData={articleData} />
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",  // Align items to the top
+        height: "100vh",
+        marginTop: "20px",
+      }}>
+        <ArticleForm
+          articleData={articleData}
+          updateArticleData={updateArticleData}
+          style={{ flex: 1 }}  // Takes up 50% of the space
+        />
+        <ContentManager
+          updateArticleContent={updateArticleContent}
+          style={{ flex: 1 }}  // Takes up 50% of the space
+        />
       </div>
     </div>
   );
-}
+};
 
 export default App;
