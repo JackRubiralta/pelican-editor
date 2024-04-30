@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/pelican-editor/static/css/main.9dabb82d.css",
+    "main.js": "/pelican-editor/static/js/main.c9cbceb5.js",
+    "static/js/453.5d5cd7d5.chunk.js": "/pelican-editor/static/js/453.5d5cd7d5.chunk.js",
+    "index.html": "/pelican-editor/index.html",
+    "main.9dabb82d.css.map": "/pelican-editor/static/css/main.9dabb82d.css.map",
+    "main.c9cbceb5.js.map": "/pelican-editor/static/js/main.c9cbceb5.js.map",
+    "453.5d5cd7d5.chunk.js.map": "/pelican-editor/static/js/453.5d5cd7d5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9dabb82d.css",
+    "static/js/main.c9cbceb5.js"
+  ]
+}
