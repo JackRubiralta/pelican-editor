@@ -59,7 +59,6 @@ function ContentManager({ updateArticleContent }) {
                             </>
                         ) : content.type === 'list' ? (
                             <textarea
-                                value={content.items.join(',')}
                                 onChange={(e) => handleContentChange(index, e.target.value.split(',').map(item => item.trim()), 'items')}
                                 placeholder="Enter list items separated by commas"
                             />
@@ -67,7 +66,7 @@ function ContentManager({ updateArticleContent }) {
                             <textarea
                                 value={content.text}
                                 onChange={(e) => handleContentChange(index, e.target.value)}
-                                placeholder={`Type ${content.type} here...`}
+                                placeholder={`Type ${content.type} here... (**bold text**, \\iitalic text\\i)`}
                             />
                         )}
                         <button onClick={() => handleDeleteContent(index)}>Delete</button>
