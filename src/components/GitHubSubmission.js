@@ -126,7 +126,7 @@ const GitHubSubmission = ({ articleData }) => {
                 [section]: [...responseData[section], updatedArticleData]
             };
     
-            const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(updatedData))));
+            const contentBase64 = encodeURIComponent(JSON.stringify(updatedData));
     
             const updateResponse = await axios.put(apiUrl, {
                 message: `Update articles.json with new article in issue ${issueNumber}, section ${section}`,
